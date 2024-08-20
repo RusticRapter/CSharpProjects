@@ -178,16 +178,16 @@ public class Chunk {
                 if (j == 0) {
                     //If in top left corner
                     if (i == 0) {
-                        if (upLeftChunk.cellData[fidelity, fidelity]) {neighbors++;}
+                        if (upLeftChunk.cellData[fidelity-1, fidelity-1]) {neighbors++;}
                     }
                     //Any other far left
                     else {
-                        if (leftChunk.cellData[fidelity, i-1]) {neighbors++;}
+                        if (leftChunk.cellData[fidelity-1, i-1]) {neighbors++;}
                     }
                 }
                 //If on top but not top left corner
                 else if (i == 0) {
-                    if (upChunk.cellData[j-1, fidelity]) {neighbors++;}
+                    if (upChunk.cellData[j-1, fidelity-1]) {neighbors++;}
                 }
                 //Anything not on far left or top
                 else {
@@ -197,113 +197,35 @@ public class Chunk {
                 //Left
                 //If on far left
                 if (j == 0) {
-                    if(leftChunk.cellData[fidelity, i]) {neighbors++;}
+                    if(leftChunk.cellData[fidelity-1, i]) {neighbors++;}
                 }
                 //Anything not on far left
                 else {
                     if(cellData[j-1, i]) {neighbors++;}
                 }
-
-                //Middle
-                if (i != 0 && i != 15 && j != 0 && j != 15) {
-                    //Left
-                    if (cellData[j-1,i-1]) {neighbors++;}
-                    if (cellData[j-1,i]) {neighbors++;}
-                    if (cellData[j-1,i+1]) {neighbors++;}
-                    //Middle
-                    if (cellData[j,i-1]) {neighbors++;}
-                    if (cellData[j,i+1]) {neighbors++;}
-                    //Right
-                    if (cellData[j+1,i-1]) {neighbors++;}
-                    if (cellData[j+1,i]) {neighbors++;}
-                    if (cellData[j+1,i+1]) {neighbors++;}
-                }
-                //Left Side
-                else if (j == 0) {
-                    //Top Left
-                    if (i == 0) {
-                        //Left
-                        if (upLeftChunk.cellData[15,15]) {neighbors++;}
-                        if (leftChunk.cellData[15, i]) {neighbors++;}
-                        if (leftChunk.cellData[15, i+1])
-
-                        //Middle
-                        if (upChunk.cellData[0, 15]) {neighbors++;}
-                        if (cellData[j,i+1]) {neighbors++;}
-                        //Right
-                        if (upChunk.cellData[j+1, 15]) {neighbors++;}
-                        if (cellData[j+1,i]) {neighbors++;}
-                        if (cellData[j+1,i+1]) {neighbors++;}
+                //
+                //Down Left
+                //If on far left
+                if (j == 0) {
+                    //If in bottom left corner
+                    if (i == (fidelity-1)) {
+                        if (downLeftChunk.cellData[fidelity-1, 0]) {neighbors++;}
                     }
-                    //Bottom Left
-                    else if (i == 15) {
-                        //Top Middle
-                        if (cellData[j,i-1]) {neighbors++;}
-                        //Right
-                        if (cellData[j+1,i-1]) {neighbors++;}
-                        if (cellData[j+1,i]) {neighbors++;}
-                    }
+                    //Any other far left
                     else {
-                        //Middle                      
-                        if (cellData[j,i-1]) {neighbors++;}
-                        if (cellData[j,i+1]) {neighbors++;}
-                        //Right
-                        if (cellData[j+1,i-1]) {neighbors++;}
-                        if (cellData[j+1,i]) {neighbors++;}
-                        if (cellData[j+1,i+1]) {neighbors++;}
+                        if (leftChunk.cellData[fidelity-1, i+1]) {neighbors++;}
                     }
                 }
-                //Right Side
-                else if (j == 15) {
-                    //Top Right
-                    if (i == 0) {
-                        //Bottom Middle
-                        if (cellData[j,i+1]) {neighbors++;}
-                        //Left
-                        if (cellData[j-1,i]) {neighbors++;}
-                        if (cellData[j-1,i+1]) {neighbors++;}
-                    }
-                    //Bottom Right
-                    else if (i == 15) {
-                        //Top Middle
-                        if (cellData[j,i-1]) {neighbors++;}
-                        //Left
-                        if (cellData[j-1,i-1]) {neighbors++;}
-                        if (cellData[j-1,i]) {neighbors++;}
-                    }
-                    else {
-                        //Middle                      
-                        if (cellData[j,i-1]) {neighbors++;}
-                        if (cellData[j,i+1]) {neighbors++;}
-                        //Left
-                        if (cellData[j-1,i-1]) {neighbors++;}
-                        if (cellData[j-1,i]) {neighbors++;}
-                        if (cellData[j-1,i+1]) {neighbors++;}
-                    }
-                }
-                //Top Side
+                //If on bottom but not bottom left corner
                 else if (i == 0) {
-                    //Middle                      
-                    if (cellData[j,i+1]) {neighbors++;}
-                    //Left
-                    if (cellData[j-1,i]) {neighbors++;}
-                    if (cellData[j-1,i+1]) {neighbors++;}
-                    //Right
-                    if (cellData[j+1,i]) {neighbors++;}
-                    if (cellData[j+1,i+1]) {neighbors++;}
+                    if (downChunk.cellData[j-1, 0]) {neighbors++;}
                 }
-                //Bottom Side
-                else if (i == 15) {
-                    //Middle                      
-                    if (cellData[j,i-1]) {neighbors++;}
-                    //Left
-                    if (cellData[j-1,i-1]) {neighbors++;}
-                    if (cellData[j-1,i]) {neighbors++;}
-                    //Right
-                    if (cellData[j+1,i-1]) {neighbors++;}
-                    if (cellData[j+1,i]) {neighbors++;}
+                //Anything not on far left or bottom
+                else {
+                    if (cellData[j-1, i+1]) {neighbors++;}
                 }
 
+                //Apply GoL rules
                 if (cellData[j,i]) {
                     switch(neighbors) {
                         case <= 1:

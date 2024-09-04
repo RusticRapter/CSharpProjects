@@ -1,2 +1,2 @@
-A simple implementaion of Conways Game of Life (GoL)
-May become/add new cellular automata
+A Neural Network Implementation.
+Later will add games that the network will be trained in

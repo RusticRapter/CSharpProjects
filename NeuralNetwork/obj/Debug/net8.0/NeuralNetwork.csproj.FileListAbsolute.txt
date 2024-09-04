@@ -1,0 +1,15 @@
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\bin\Debug\net8.0\NeuralNetwork.exe
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\bin\Debug\net8.0\NeuralNetwork.deps.json
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\bin\Debug\net8.0\NeuralNetwork.runtimeconfig.json
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\bin\Debug\net8.0\NeuralNetwork.dll
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\bin\Debug\net8.0\NeuralNetwork.pdb
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\NeuralNetwork.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\NeuralNetwork.AssemblyInfoInputs.cache
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\NeuralNetwork.AssemblyInfo.cs
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\NeuralNetwork.csproj.CoreCompileInputs.cache
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\NeuralNetwork.sourcelink.json
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\NeuralNetwork.dll
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\refint\NeuralNetwork.dll
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\NeuralNetwork.pdb
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\NeuralNetwork.genruntimeconfig.cache
+C:\Users\25.caleb.mcmullen\Documents\Visual Studio\CellularAutomata\NeuralNetwork\obj\Debug\net8.0\ref\NeuralNetwork.dll

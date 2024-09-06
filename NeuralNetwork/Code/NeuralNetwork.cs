@@ -1,15 +1,23 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace NeuralNetwork.Code;
 
+//Rewrite for weights to be correct
+//Currently each weight is in the neuron spot
+//Needs to be a weight for each indiviual connection
 public class NeuralNetwork{
     float[][] weights { get; }
 
-    int 
+    //Sets the clamp mode Computer will use
+    // 0 == [0, 1]
+    // 1 == [-1, 1]
+    int clampType { get; }
 
     //Generic Constructor
-    public NeuralNetwork (int[] layers, string data) {
+    public NeuralNetwork (int[] layers, int clampMode, string data) {
         weights = CreateWeights(layers);
+        clampType = clampMode;
         FillWeightsFromData(data);
     }
     //Copy Constructor
@@ -20,7 +28,8 @@ public class NeuralNetwork{
             layers[i] = network.weights[i].Length;
         }
         weights = CreateWeights(layers);
-        network.weights.CopyTo(neurons, 0);
+        network.weights.CopyTo(weights, 0);
+        clampType = network.clampType;
     }
 
     //Creates the layers and neuron weight
@@ -54,7 +63,7 @@ public class NeuralNetwork{
             for (int j = 0; j < weights[i].Length; j++) {
                 float weightValue;
                 //Throws an error if the input data is not the correct format
-                if (!float.TryParse(neuronStrings[i][j], out neuronValue)) {
+                if (!float.TryParse(weightStrings[i][j], out weightValue)) {
                     Console.WriteLine("Error in FillWeightsFromData: Input data in invalid format at (" + i + ", " + j + ")");
                     return;
                 }
@@ -74,8 +83,21 @@ public class NeuralNetwork{
 
     //Computes the input data through the network and outputs a float[] with the values
     //FINISH
-    public float[] Compute(float[] inputs) {
+    public float[] Compute(float[] input) {
+        //Checks if input[] length is correct
+        //Returns an empty float[] if incorrect
+        if (input.Length != weights[0].Length) {
+            Console.WriteLine("Error in Compute: legth of inputs[] does not equal legth of input layer");
+            return new float[0];
+        }
+
         float[] output = new float[weights[weights.Length-1].Length];
+
+        float[][] values = new float[weights.Length][];
+        values[0] = input;
+        for (int i = 1; i < values.Length; i++) {
+            values[i] = new float[weights[i].Length];
+        }
 
         return output; 
     }

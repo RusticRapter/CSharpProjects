@@ -300,6 +300,27 @@ public class NeuralNetwork{
     //
     //Complete
     public string WeightsToString() {
-        return "";
+        string output = "";
+
+        //Loops through each weight adding to the string
+        //Adds separator characters between each weight
+        for (int i = 0; i < weights.Length; i ++) {
+            if (i != 0) {
+                output += ':';
+            }
+            for (int j = 0; j < weights[i].Length; j++) {
+                if (j != 0) {
+                    output += ';';
+                }
+                for (int k = 0; k < weights[i][j].Length; k++)  {
+                    if (k != 0) {
+                        output += ',';
+                    }
+                    output += weights[i][j][k];
+                }
+            }
+        }
+
+        return output;
     }
 }

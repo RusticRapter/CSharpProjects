@@ -6,6 +6,7 @@ namespace NeuralNetwork.Code;
 //Rewrite for weights to be correct
 //Currently each weight is in the neuron spot
 //Needs to be a weight for each indiviual connection
+//Current "weights" are biases
 public class NeuralNetwork{
     float[][] weights { get; }
 

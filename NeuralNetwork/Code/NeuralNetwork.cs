@@ -21,42 +21,92 @@ public class NeuralNetwork{
     //The number of outputs the network gives out
     int outputLength { get; }
 
+    //The number of nuerons in each hidden layer
+    int[] hiddenLayerLengths { get; }
+
     //The weights for each neuron connecting backwards
     //Ex. the neuron for output 1 contains an array of floats for each weight to each neuron in the last hidden layer
-    float[][][] weights { get; }
+    float[][][] weights;
 
     //Sets the activation function the network will use
     //  0 == 1/(1+e^-x)
     //  1 == clamp[0, 1]
     int activationMode { get; }
+    int[] validActivationModes = new int[] {0, 1};
 
     //Generic Constructor
     //Sets the weights either as 0.5f or as random floats between 0 and 1 based on initalizeRandom
     public NeuralNetwork (int inputs, int outputs, int[] hiddenLayers, int activationType, bool initalizeRandom) {
-        //Creates the empty weights arrays
-        weights = CreateWeights(inputLength, outputLength, hiddenLayers);
-
-        //Sets the other variables
-        inputLength = inputs;
-        outputLength = outputs;
-        activationMode = activationType;
+        bool isValidInputs = true;
         
+        //Sets the other variables
+        inputLength = Math.Abs(inputs);
+        outputLength = Math.Abs(outputs);
+        hiddenLayerLengths = new int[hiddenLayers.Length];
+        hiddenLayers.CopyTo(hiddenLayerLengths, 0);
+        //Checks if all hidden layers are positive numbers
+        for (int i = 0; i < hiddenLayerLengths.Length; i++) {
+            if (hiddenLayerLengths[i] <= 0) {
+                isValidInputs = false;
+                Console.WriteLine("Error in Constructor: Hidden layer length invalid in layer " + i);
+                break;
+            }
+        }
+        activationMode = activationType;
+        //Checks if activation mode is a valid type
+        if (!validActivationModes.Contains(activationMode)) {
+            isValidInputs = false;
+            Console.WriteLine("Error in Constructor: Activation mode invalid");
+        }
+
+        //Only completes set up if inputs are valid
+        if (isValidInputs) {
+            //Creates the empty weights arrays
+            weights = CreateWeights(inputLength, outputLength, hiddenLayerLengths);
+        }
+        else {
+            weights = CreateWeights(inputLength, outputLength, new int[0]);
+        }
+
         //Fills the weights
-        FillWeights(initalizeRandom);
+            FillWeights(initalizeRandom);
     }
 
-    //Constructor from previous data
+    //Constructor using data
     //Sets the weights based on the inputed data
     //  Data in the form of "0.000...,0.000...;0.000...,0.000...,0.000...:0.000...; 0.000..., 0.000..."
     //  Commas separate weights, semi colons separate neurons, colons separate layers
     public NeuralNetwork (int inputs, int outputs, int[] hiddenLayers, int activationType, string data) {
-        //Creates the empty weight arrays
-        weights = CreateWeights(inputLength, outputLength, hiddenLayers);
-
-        //Sets other variables
-        inputLength = inputs;
-        outputLength = outputs;
+        bool isValidInputs = true;
+        
+        //Sets the other variables
+        inputLength = Math.Abs(inputs);
+        outputLength = Math.Abs(outputs);
+        hiddenLayerLengths = new int[hiddenLayers.Length];
+        hiddenLayers.CopyTo(hiddenLayerLengths, 0);
+        //Checks if all hidden layers are positive numbers
+        for (int i = 0; i < hiddenLayerLengths.Length; i++) {
+            if (hiddenLayerLengths[i] <= 0) {
+                isValidInputs = false;
+                Console.WriteLine("Error in Constructor: Hidden layer length invalid in layer " + i);
+                break;
+            }
+        }
         activationMode = activationType;
+        //Checks if activation mode is a valid type
+        if (!validActivationModes.Contains(activationMode)) {
+            isValidInputs = false;
+            Console.WriteLine("Error in Constructor: Activation mode invalid");
+        }
+
+        //Only completes set up if inputs are valid
+        if (isValidInputs) {
+            //Creates the empty weights arrays
+            weights = CreateWeights(inputLength, outputLength, hiddenLayerLengths);
+        }
+        else {
+            weights = CreateWeights(inputLength, outputLength, new int[0]);
+        }
 
         //Fills the weights with data
         FillWeightsFromData(data);
@@ -64,24 +114,24 @@ public class NeuralNetwork{
     //Copy Constructor
     //Copies all values from the given network
     public NeuralNetwork (NeuralNetwork network) {
+        //Copies simple variables
+        inputLength = network.inputLength;
+        outputLength = network.outputLength;
+        hiddenLayerLengths = network.hiddenLayerLengths;
+        activationMode = network.activationMode;
+
         //Copies the size of the hidden layers
-        int[] hiddenLayers = new int[network.weights.Length - 1];
+        int[] hiddenLayers = new int[network.hiddenLayerLengths.Length];
+        network.hiddenLayerLengths.CopyTo(hiddenLayers, 0);
         for (int i = 0; i < hiddenLayers.Length; i++) {
             hiddenLayers[i] = network.weights[i].Length;
         }
-
-        //Copies the input and output size
-        inputLength = network.inputLength;
-        outputLength = network.outputLength;
 
         //Creates the empty weights arrays
         weights = CreateWeights(inputLength, outputLength, hiddenLayers);
         
         //Copies the weights from the given network
         network.weights.CopyTo(weights, 0);
-
-        //Copies the other variables
-        activationMode = network.activationMode;
     }
 
     //Creates the layers and neuron weight
@@ -194,8 +244,17 @@ public class NeuralNetwork{
     //
     //Create
     float activation(float input) {
-        float output = input;
-        return output;
+        //1/(1+e^-x)
+        switch (activationMode) {
+            case 0:
+                return 1/(1+MathF.Pow(MathF.E, input));
+            
+            case 1:
+                return Math.Clamp(input, 0f, 1f);
+
+            default:
+                return input;
+        }
     }
 
     //Changes one neuron weight to the given value
@@ -208,8 +267,6 @@ public class NeuralNetwork{
     }
 
     //Computes the input data through the network and outputs a float[] with the values
-    //
-    //FINISH
     public float[] Compute(float[] input) {
         //Checks if input[] length is correct
         //Returns an empty float[] if incorrect
@@ -218,14 +275,31 @@ public class NeuralNetwork{
             return new float[0];
         }
 
-        float[] output = new float[weights[weights.Length-1].Length];
-
+        //Creates an empty array to store the values as they are computed
         float[][] values = new float[weights.Length][];
         values[0] = input;
         for (int i = 1; i < values.Length; i++) {
             values[i] = new float[weights[i].Length];
         }
 
-        return output; 
+        for (int i = 1; i < values.Length; i++) {
+            for (int j = 0; j < values[i].Length; j++) {
+                for (int k = 0; k < weights[i][j].Length; k++) {
+                    values[i][j] += values[i-1][k] * weights[i][j][k];
+                }
+                values[i][j] = activation(values[i][j]);
+            }
+        }
+
+        return values.Last(); 
+    }
+
+    //Return the weights in a string form
+    //Same form as FillWeightsFromData
+    //  commas separate weights, semi colons separate neurons, colons separate layers
+    //
+    //Complete
+    public string WeightsToString() {
+        return "";
     }
 }

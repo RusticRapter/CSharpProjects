@@ -247,7 +247,7 @@ public class NeuralNetwork{
         //1/(1+e^-x)
         switch (activationMode) {
             case 0:
-                return 1/(1+MathF.Pow(MathF.E, input));
+                return 1/(1+MathF.Pow(MathF.E, -input));
             
             case 1:
                 return Math.Clamp(input, 0f, 1f);

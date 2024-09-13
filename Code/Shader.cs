@@ -1,7 +1,5 @@
 using OpenTK.Graphics.OpenGL;
 
-namespace NeuralNetwork.Code;
-
 public class Shader {
     int handle;
 

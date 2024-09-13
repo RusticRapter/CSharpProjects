@@ -1,7 +1,5 @@
 using System;
 
-namespace NeuralNetwork.Code;
-
 //Stores basic information about a camera
 public class Camera {
     //Speed of the camera

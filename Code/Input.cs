@@ -1,7 +1,5 @@
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
-namespace NeuralNetwork.Code;
-
 public class Input {
     public static bool space = false;
     public static bool escape = false;

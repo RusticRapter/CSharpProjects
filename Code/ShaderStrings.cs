@@ -1,7 +1,5 @@
 using System;
 
-namespace NeuralNetwork.Code;
-
 public static class ShaderStrings {
     public static string vertShader = @"
         #version 330

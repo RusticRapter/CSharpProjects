@@ -2,8 +2,6 @@ using OpenTK.Mathematics;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Common.Input;
 
-namespace NeuralNetwork.Code;
-
 public static class WindowSettings {
     //Settings for Game Window Settings (gWinSets)
     //

@@ -1,8 +1,6 @@
 using System;
 using System.Numerics;
 
-namespace NeuralNetwork.Code;
-
 //Changes Needed
 //Rewrite for weights to be correct
 //  Currently each weight is in the neuron spot

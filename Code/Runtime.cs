@@ -1,7 +1,5 @@
 using OpenTK.Windowing.Desktop;
 
-namespace NeuralNetwork.Code;
-
 public static class Runtime {
 
     static Window window;

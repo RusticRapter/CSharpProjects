@@ -5,8 +5,6 @@ using OpenTK.Graphics.OpenGL4;
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 
-namespace NeuralNetwork.Code;
-
 public class Window : GameWindow {
     Vector4 backgroundColor = new Vector4(0.0f, 0.0f, 0.0f, 1.0f);
     Vector4 cellColor = new Vector4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -15,7 +13,7 @@ public class Window : GameWindow {
 
     public NativeWindowSettings nativeWindowSettings;
 
-    public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings, string vertShad, string fragShad) 
+    public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings, string vertShad, string fragShad, Game selectedGame) 
     : base(gameWindowSettings, nativeWindowSettings) {
         this.gameWindowSettings = gameWindowSettings;
         this.nativeWindowSettings = nativeWindowSettings;
@@ -50,6 +48,8 @@ public class Window : GameWindow {
 
     float xStretch = 1.6f;
 
+    Game game;
+
     //Called once wwhen Window.Run is fi rst called
     protected override void OnLoad() {
         base.OnLoad();
@@ -78,6 +78,7 @@ public class Window : GameWindow {
         if (Input.escape) {
             Close();
         }
+        //Movement of the camera
         if (Input.w) {
             camera.yPos += camera.moveSpeed * deltaTime;
         }
@@ -90,6 +91,9 @@ public class Window : GameWindow {
         if (Input.a) {
             camera.xPos -= camera.moveSpeed * deltaTime;
         }
+
+        game.Update();
+        shaderData = game.OutVectors();
 
         //Debugs
         //
